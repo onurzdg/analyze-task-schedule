@@ -147,7 +147,6 @@ impl<'a> std::fmt::Display for TaskOrder<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use quickcheck;
     use quickcheck::TestResult;
 
     #[quickcheck]
