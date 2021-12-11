@@ -1,0 +1,1 @@
+thread 'main' panicked at 'Labels cannot have a dependency on themselves: TaskLabel(BuoxppGpYOk9kdzEAELC7o9B)', src/task.rs:90:13

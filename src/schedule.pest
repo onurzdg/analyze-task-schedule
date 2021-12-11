@@ -1,0 +1,23 @@
+// Sample file contents:
+// Q(1)
+// T(1) after [Q]
+// J(1)
+//    after [Q]
+// K(1)  after [T]
+// N(1) after
+//   [T,
+//      J]
+// P(1) after [J]
+// H(1) after [K, N]
+// I(1) after
+//   [N, P]
+
+task_name = @{(LETTER | ASCII_DIGIT | "." | "-" | "_" )+}
+task_duration = @{ASCII_DIGIT+}
+task_name_and_duration = {task_name ~ "(" ~ task_duration ~ ")"}
+task_dependency_list = {task_name ~ ("," ~ task_name)*}
+task_dependencies = { task_name_and_duration ~ "after" ~ "[" ~ task_dependency_list  ~ "]"}
+record = {task_dependencies | task_name_and_duration}
+file = { SOI ~ (record)* ~ EOI }
+
+WHITESPACE = _{ " " | "\t" | NEWLINE}

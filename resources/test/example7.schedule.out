@@ -1,0 +1,13 @@
+task_count: 3
+max_parallelism: 3
+minimum_completion_time: 0
+critical_path_count: 3
+critical_paths:
+1)
+A
+
+2)
+B
+
+3)
+C

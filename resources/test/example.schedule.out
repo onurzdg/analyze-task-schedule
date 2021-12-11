@@ -1,0 +1,22 @@
+task_count: 8
+max_parallelism: 3
+minimum_completion_time: 4
+critical_path_count: 6
+critical_paths:
+1)
+Q->J->N->H
+
+2)
+Q->J->N->I
+
+3)
+Q->J->P->I
+
+4)
+Q->T->K->H
+
+5)
+Q->T->N->H
+
+6)
+Q->T->N->I

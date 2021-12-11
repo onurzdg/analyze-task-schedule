@@ -1,0 +1,14 @@
+Q(1)
+T(1) after [Q]
+J(1)
+   after [Q]
+K(1)  after [T]
+N(1) after
+  [T,
+     J]
+P(1) after [J]
+H(1) after [K, N]
+I(1) after
+  [N, P]
+方言(20)
+锈(41) after [P, J, 方言]

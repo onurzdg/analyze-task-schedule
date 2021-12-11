@@ -1,0 +1,6 @@
+task_count: 2
+max_parallelism: 2
+minimum_completion_time: 17
+critical_path_count: 1
+critical_path:
+B

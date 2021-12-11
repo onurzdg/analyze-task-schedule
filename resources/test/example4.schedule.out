@@ -1,0 +1,10 @@
+task_count: 12
+max_parallelism: 3
+minimum_completion_time: 61
+critical_path_count: 2
+critical_paths:
+1)
+J->S
+
+2)
+方言->锈
