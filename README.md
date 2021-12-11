@@ -16,11 +16,11 @@ Bad input, missing information, and cycles will be detected and rejected with an
 Parser is capable of dealing with files that have an inconsistent amount white spaces between each token.
 
 ### Output:
-task_count: number of tasks found in the input file
-max_parallelism: maximum number of tasks that can be found executing simultaneously
+task_count: number of tasks found in the input file.  
+max_parallelism: maximum number of tasks that can be found executing simultaneously  
 minimum_completion_time: minimum time to execute all tasks, which is the same as the time it takes to complete the
-critical path
-critical_path_count: number of discovered critical paths
+critical path  
+critical_path_count: number of discovered critical paths  
 critical_paths: all discovered critical paths
 
 ## Sample Input File Format
@@ -71,7 +71,7 @@ Q->T->N->H
 Q->T->N->I
 ```
 
-For further input and output samples, check `resources/test` folder.
+For further input and output samples, check `resources/test` folder.  
 See `src/schedule.pest` for complete input file grammar.
 
 ## Execution
