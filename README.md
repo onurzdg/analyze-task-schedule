@@ -28,8 +28,7 @@ critical_paths: all discovered critical paths
 In the sample input file below, "Q(1)" is a task that takes one unit of time to execute.
 "T(1) after [Q]" means "T" takes one unit to execute and has to be executed after "A".
 
-Given this set of tasks in `test/example.tasks.in`:
-
+Given this input file
 ```
 Q(1)
 T(1) after [Q]
@@ -45,7 +44,7 @@ I(1) after
   [N, P]
 ```
 
-when invoked as `./analyze-task-schedule tasks.in`, it will output
+the output will be
 
 ```
 task_count: 8
@@ -72,7 +71,7 @@ Q->T->N->H
 Q->T->N->I
 ```
 
-For further input and output samples, check `resources/test` folder. 
+For further input and output samples, check `resources/test` folder.
 See `src/schedule.pest` for complete input file grammar.
 
 ## Execution
