@@ -1,7 +1,7 @@
 # Task Schedule Analyzer
 
 Sometimes we need to execute many small tasks in a particular order to consider a job "done". 
-"analyze-task-schedule" takes as input a set of tasks that make up a directed-acyclic-graph(DAG) and renders an 
+This application takes as input a set of tasks that make up a directed-acyclic-graph(DAG) and renders an 
 analysis of the schedule with the assumption that infinite resources are available to execute the tasks. 
 The analyzer is also capable of dealing with multiple DAGs in the input file.
 
@@ -45,7 +45,7 @@ I(1) after
   [N, P]
 ```
 
-when invoked as `./analyze-tasks tasks.in`, it will output
+when invoked as `./analyze-tasks-schedule tasks.in`, it will output
 
 ```
 task_count: 8
