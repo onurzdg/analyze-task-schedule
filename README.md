@@ -45,7 +45,7 @@ I(1) after
   [N, P]
 ```
 
-when invoked as `./analyze-tasks-schedule tasks.in`, it will output
+when invoked as `./analyze-task-schedule tasks.in`, it will output
 
 ```
 task_count: 8
