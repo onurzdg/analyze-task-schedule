@@ -133,7 +133,6 @@ impl<R> From<PestError<R>> for ParserError {
 mod tests {
     use super::*;
     use crate::task::TaskRelation;
-    use quickcheck;
     use quickcheck::TestResult;
     use std::collections::HashSet;
     use std::fs;

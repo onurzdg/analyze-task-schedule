@@ -347,7 +347,9 @@ impl<'a> CriticalPaths<'a> {
         // Paths with more tasks should come first because they provide more opportunities
         // for optimization. Else, we defer to lexicographical ordering.
         critical_paths.sort_unstable_by(|path1, path2| {
-            path2.len().cmp(&path1.len())
+            path2
+                .len()
+                .cmp(&path1.len())
                 .then(path1.iter().cmp(path2.iter()))
                 .then_with(|| panic!("There cannot be duplicate critical paths {:?}", path1))
         });
@@ -429,7 +431,6 @@ fn serialize_path(
 pub mod tests {
     use super::*;
     use crate::task::{TaskLabel, TaskRelation};
-    use quickcheck;
     use quickcheck::TestResult;
     use std::convert::TryFrom;
     use util::*;
@@ -475,7 +476,7 @@ pub mod tests {
         // A -> C
         // B -> D
         let ords = &["A".arrow("C"), "B".arrow("D")];
-        let durs = &[("A", 5 as Duration), ("B", 1), ("C", 9), ("D", 7)];
+        let durs = &[("A", 5u16), ("B", 1), ("C", 9), ("D", 7)];
         let analysis = analyze(ords, durs).unwrap();
         assert_eq!(analysis.max_parallelism, 2);
         assert_eq!(analysis.task_count, 4);
@@ -486,7 +487,7 @@ pub mod tests {
         // A -> C
         // B -> D
         let ords = &["A".arrow("C"), "B".arrow("D")];
-        let durs = &[("A", 5 as Duration), ("B", 7), ("C", 9), ("D", 8)];
+        let durs = &[("A", 5u16), ("B", 7), ("C", 9), ("D", 8)];
         let analysis = analyze(ords, durs).unwrap();
         assert_eq!(analysis.max_parallelism, 2);
         assert_eq!(analysis.task_count, 4);
@@ -512,7 +513,7 @@ pub mod tests {
             "K".node(),
         ];
         let durs = &[
-            ("A", 1 as Duration),
+            ("A", 1u16),
             ("B", 1),
             ("C", 1),
             ("D", 1),
@@ -542,7 +543,7 @@ pub mod tests {
             "K".node(),
         ];
         let durs = &[
-            ("A", 1 as Duration),
+            ("A", 1u16),
             ("B", 1),
             ("C", 1),
             ("D", 1),
@@ -564,7 +565,7 @@ pub mod tests {
         );
 
         let ords = &["A".arrow("B"), "A".arrow("C"), "K".node()];
-        let durs = &[("A", 0 as Duration), ("B", 0), ("C", 0), ("K", 0)];
+        let durs = &[("A", 0u16), ("B", 0), ("C", 0), ("K", 0)];
         let analysis = analyze(ords, durs).unwrap();
         assert!(
             analysis.max_parallelism == 2 || analysis.max_parallelism == 3,
@@ -589,13 +590,7 @@ pub mod tests {
             "L".arrow("Z"),
             "T".arrow("F"),
         ];
-        let durs = &[
-            ("K", 1 as Duration),
-            ("L", 12),
-            ("Z", 1),
-            ("T", 5),
-            ("F", 20),
-        ];
+        let durs = &[("K", 1u16), ("L", 12), ("Z", 1), ("T", 5), ("F", 20)];
         let analysis = analyze(ords, durs).unwrap();
         assert_eq!(analysis.max_parallelism, 2);
         assert_eq!(analysis.task_count, 5);
@@ -622,7 +617,7 @@ pub mod tests {
             "G".arrow("I"),
         ];
         let durs = &[
-            ("A", 1 as Duration),
+            ("A", 1u16),
             ("B", 1),
             ("C", 1),
             ("D", 1),
@@ -660,7 +655,7 @@ pub mod tests {
             "F".arrow("I"),
         ];
         let durs = &[
-            ("A", 1 as Duration),
+            ("A", 1u16),
             ("B", 1),
             ("C", 1),
             ("D", 1),
@@ -706,7 +701,7 @@ pub mod tests {
             "I".arrow("K"),
         ];
         let durs = &[
-            ("A", 1 as Duration),
+            ("A", 1u16),
             ("B", 1),
             ("C", 1),
             ("D", 1),
@@ -748,13 +743,7 @@ pub mod tests {
             "Z".arrow("D"),
             "J".arrow("D"),
         ];
-        let durs = &[
-            ("P", 7 as Duration),
-            ("T", 19),
-            ("D", 0),
-            ("Z", 10),
-            ("J", 26),
-        ];
+        let durs = &[("P", 7u16), ("T", 19), ("D", 0), ("Z", 10), ("J", 26)];
         let analysis = analyze(ords, durs).unwrap();
         assert_eq!(analysis.max_parallelism, 3);
         assert_eq!(analysis.task_count, 5);
@@ -865,7 +854,7 @@ pub mod tests {
     ) -> TestResult {
         {
             let gen_labels_len = gen_labels.len();
-            if gen_labels_len < 20 || gen_labels_len > 100 {
+            if !(20..=100).contains(&gen_labels_len) {
                 return TestResult::discard();
             }
 
@@ -910,8 +899,7 @@ pub mod tests {
                 .iter()
                 .zip(path2.iter())
                 .map(|(str1, str2)| str1.cmp(str2))
-                .skip_while(|cmp| *cmp == Ordering::Equal)
-                .next()
+                .find(|cmp| *cmp != Ordering::Equal)
                 .unwrap()
         });
 
@@ -936,7 +924,7 @@ pub mod tests {
     fn cyclic_schedules() {
         // A -> B -> A
         let ords = &["A".arrow("B"), "B".arrow("A")];
-        let durs = &[("A", 5 as Duration), ("B", 1)];
+        let durs = &[("A", 5u16), ("B", 1)];
         let res = analyze(ords, durs);
         assert_eq!(res.unwrap_err(), AnalysisError::Cycle);
 
@@ -949,7 +937,7 @@ pub mod tests {
             "C".arrow("D"),
             "D".arrow("A"),
         ];
-        let durs = &[("A", 5 as Duration), ("B", 1), ("C", 1), ("D", 7)];
+        let durs = &[("A", 5u16), ("B", 1), ("C", 1), ("D", 7)];
         let res = analyze(ords, durs);
         assert_eq!(res.unwrap_err(), AnalysisError::Cycle);
 
@@ -960,7 +948,7 @@ pub mod tests {
             "D".arrow("B"),
             "B".arrow("A"),
         ];
-        let durs = &[("A", 5 as Duration), ("B", 1), ("C", 1), ("D", 7)];
+        let durs = &[("A", 5u16), ("B", 1), ("C", 1), ("D", 7)];
         let res = analyze(ords, durs);
         assert_eq!(res.unwrap_err(), AnalysisError::Cycle);
 
@@ -973,7 +961,7 @@ pub mod tests {
             "L".arrow("T"),
             "T".arrow("L"),
         ];
-        let durs = &[("K", 5 as Duration), ("L", 1), ("T", 1)];
+        let durs = &[("K", 5u16), ("L", 1), ("T", 1)];
         let res = analyze(ords, durs);
         assert_eq!(res.unwrap_err(), AnalysisError::Cycle);
     }

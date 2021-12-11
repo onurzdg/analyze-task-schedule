@@ -5,6 +5,9 @@ Sometimes we need to execute many small tasks in a particular order to consider 
 analysis of the schedule with the assumption that infinite resources are available to execute the tasks. 
 The analyzer is also capable of dealing with multiple DAGs in the input file.
 
+![Build Status](https://github.com/onurzdg/analyze-task-schedule/actions/workflows/rust.yml/badge.svg)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
 ## Input and Output
 
 ### Input: 
